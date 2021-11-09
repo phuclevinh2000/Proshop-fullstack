@@ -1,0 +1,36 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "MERN shopping cart",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuclevinh2000/Proshop-fullstack.git"
+  },
+  "keywords": [],
+  "author": "Phuc Le",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phuclevinh2000/Proshop-fullstack/issues"
+  },
+  "homepage": "https://github.com/phuclevinh2000/Proshop-fullstack#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "color": "^4.0.1",
+    "colors": "^1.4.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.12"
+  },
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "nodemon": "^2.0.15"
+  }
+}
