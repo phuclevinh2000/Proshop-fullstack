@@ -11,7 +11,7 @@ import connectDB from './config/db.js'
 dotenv.config()
 
 connectDB()
-
+// Push data to mongo
 const importData = async () => {
   try {
     await Order.deleteMany()
@@ -19,9 +19,7 @@ const importData = async () => {
     await User.deleteMany()
 
     const createdUsers = await User.insertMany(users)
-
     const adminUser = createdUsers[0]._id
-
     const sampleProducts = products.map((product) => {
       return { ...product, user: adminUser }
     })
