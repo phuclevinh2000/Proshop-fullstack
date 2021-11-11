@@ -16,7 +16,7 @@ app.get('/', (req,res) => {
   res.send('API is running.....')
 })
 
-app.use('/api/products', productRoutes)
+app.use('/api/products', productRoutes) //fetch data from mongo
 
 app.use(notFound)
 

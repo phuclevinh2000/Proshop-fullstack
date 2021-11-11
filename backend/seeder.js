@@ -34,6 +34,7 @@ const importData = async () => {
   }
 }
 
+// Delete data from mongo
 const destroyData = async () => {
   try {
     await Order.deleteMany()
