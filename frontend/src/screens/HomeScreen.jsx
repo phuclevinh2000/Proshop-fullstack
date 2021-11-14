@@ -19,7 +19,7 @@ const HomeSrceen = () => {
     <>
       <h1>Latest Product</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <h2>Loading screen...</h2>
       ) : error ? (
         <h3>{error} </h3>
       ) : (
