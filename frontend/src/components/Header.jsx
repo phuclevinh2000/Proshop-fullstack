@@ -17,7 +17,7 @@ const Header = () => {
             <Nav className='ms-auto'> 
             {/* Using font awesome for icons */}
               {/* <Link to="/cart"> */}
-                <Nav.Link href="cart"><i className="fas fa-shopping-cart"></i> Cart</Nav.Link> 
+                <Nav.Link href="/cart"><i className="fas fa-shopping-cart"></i> Cart</Nav.Link> 
               {/* </Link> */}
               {/* <Link to="/login"> */}
                 <Nav.Link href='/login'><i className="fas fa-user"></i> Sign In</Nav.Link>
