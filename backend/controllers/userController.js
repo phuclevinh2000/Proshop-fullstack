@@ -6,14 +6,11 @@ import User from '../models/userModel.js';
 // @route POST /api/users/login
 // @access Public
 const authUser = asyncHandler(async (req, res, next) => {
-  const {
-    email,
-    password
-  } = req.body
+  const { email, password } = req.body;
 
-  const user = await User.findOne({
-    email
-  })
+  const user = await User.findOne({ //find a user in mongo
+    email,
+  });
 
   if (user && (await user.matchPassword(password))) {
     res.json({
@@ -21,36 +18,66 @@ const authUser = asyncHandler(async (req, res, next) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
-    })
+      token: generateToken(user._id),
+    });
   } else {
-    res.status(401)
-    throw new Error("Invalid email or password")
+    res.status(401);
+    throw new Error('Invalid email or password');
   }
 });
 
+// @desc  Register a new user
+// @route POST /api/users/
+// @access Public
+const registerUser = asyncHandler(async (req, res, next) => {  
+  const { email, password, name } = req.body;
 
+  const userExists = await User.findOne({
+    //check if userExist by checking email
+    email,
+  });
 
+  if (userExists) { //if user already exist
+    res.status(400);
+    throw new Error('User already exists');
+  }
+
+  const user = await User.create({    //add to mongo new user
+    name,
+    email,
+    password,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
 
 // @desc  Get user profile
 // @route GET /api/users/profile
 // @access Private
 const getUserProfile = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id);
 
-  if(user) {
+  if (user) {
     res.json({
       _id: user._id,
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-    })
+    });
   } else {
-    res.status(404)
-    throw new Error("Invalid email or password")
+    res.status(404);
+    throw new Error('Invalid email or password');
   }
 });
-export {
-  authUser,
-  getUserProfile
-}
+export { authUser, getUserProfile, registerUser };
