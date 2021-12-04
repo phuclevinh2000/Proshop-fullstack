@@ -1,27 +1,42 @@
 import React from 'react';
-// import {LinkContainer} from "react-router-bootstrap"  //same as Link in react router dom
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Navbar, Container, Nav } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
+import { logout } from "../redux/actions/userAction"
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+  const logoutHandler = () => {
+    dispatch(logout())
+  }
   return (
     <header>
-      <Navbar bg='dark' variant="dark" expand='lg' collapseOnSelect>
+      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
-          <Link to="/">
+          <Link to='/'>
             <Navbar.Brand>Proshop</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             {/* change from ml-auto to ms-auto */}
-            <Nav className='ms-auto'> 
-            {/* Using font awesome for icons */}
-              {/* <Link to="/cart"> */}
-                <Nav.Link href="/cart"><i className="fas fa-shopping-cart"></i> Cart</Nav.Link> 
-              {/* </Link> */}
-              {/* <Link to="/login"> */}
-                <Nav.Link href='/login'><i className="fas fa-user"></i> Sign In</Nav.Link>
-              {/* </Link>  */}
+            <Nav className='ms-auto'>
+              <Nav.Link href='/cart'>
+                <i className='fas fa-shopping-cart'></i> Cart
+              </Nav.Link>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <Nav.Link href="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </Nav.Link>
+                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <Nav.Link href='/login'>
+                  <i className='fas fa-user'></i> Sign In
+                </Nav.Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
