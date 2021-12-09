@@ -56,11 +56,14 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary">
+        <Button type="submit" variant="primary" className="my-1">
           Sign In
         </Button>
+        <br/>
       </Form>
-
+      <Button type="submit" variant="danger" className="my-1">
+          Login With Google <i className="fab fa-google"></i>
+        </Button>
       <Row className="py-3">
         <Col>
           New Customer? <Link to={redirect ? `/register?redirect=${redirect}` : "/register" }>Register</Link>
