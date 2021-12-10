@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../redux/actions/userAction';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstant';
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState('');
@@ -31,14 +32,15 @@ const ProfileScreen = () => {
       //check if login yet
       navigate('/login');
     } else {
-      if (!user.name) {
+      if (!user.name || success) {
+        dispatch({type: USER_UPDATE_PROFILE_RESET})
         dispatch(getUserDetails('profile'));
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [navigate, userInfo, dispatch, user]);
+  }, [navigate, userInfo, dispatch, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -96,7 +98,6 @@ const ProfileScreen = () => {
             </InputGroup>
             {/* <input type='checkbox' className='my-1' onClick={togglePassword} /> <span>Show Password</span> */}
           </Form.Group>
-          
           
 
           <Form.Group controlId='email'>
