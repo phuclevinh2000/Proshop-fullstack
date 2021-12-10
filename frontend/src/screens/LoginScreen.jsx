@@ -33,7 +33,7 @@ const LoginScreen = () => {
   };
 
   const togglePassword = () => {
-    setPasswordShown(!passwordShown)
+    setPasswordShown(!passwordShown);
   };
   return (
     <FormContainer>
@@ -52,18 +52,20 @@ const LoginScreen = () => {
         </Form.Group>
 
         <Form.Group controlId='password'>
-            <Form.Label>Password</Form.Label>
-            <InputGroup>
-              <Form.Control
-                type={passwordShown ? 'text' : 'password'}
-                placeholder='Enter password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <InputGroup.Text onClick={togglePassword}n><i className="fas fa-eye"></i></InputGroup.Text>
-            </InputGroup>
-          </Form.Group>
-      
+          <Form.Label>Password</Form.Label>
+          <InputGroup>
+            <Form.Control
+              type={passwordShown ? 'text' : 'password'}
+              placeholder='Enter password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <InputGroup.Text onClick={togglePassword}>
+              <i className='fas fa-eye'></i>
+            </InputGroup.Text>
+          </InputGroup>
+        </Form.Group>
+
         <Button type='submit' variant='primary' className='my-1'>
           Sign In
         </Button>

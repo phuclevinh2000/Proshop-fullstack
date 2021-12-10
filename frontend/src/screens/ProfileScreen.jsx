@@ -94,7 +94,7 @@ const ProfileScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <InputGroup.Text onClick={togglePassword}n><i className="fas fa-eye"></i></InputGroup.Text>
+              <InputGroup.Text onClick={togglePassword}><i className="fas fa-eye"></i></InputGroup.Text>
             </InputGroup>
             {/* <input type='checkbox' className='my-1' onClick={togglePassword} /> <span>Show Password</span> */}
           </Form.Group>
