@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-// import CheckoutStep from '../components/CheckoutStep';
+import CheckoutSteps from '../components/CheckoutSteps';
 import FormContainer from '../components/FormContainer';
 
 import { saveShippingAddress } from '../redux/actions/cartActions';
@@ -26,7 +26,7 @@ const ShippingScreen = () => {
   };
   return (
     <FormContainer>
-      {/* <CheckoutStep step1 step2/> */}
+      <CheckoutSteps step1 step2/>
       <h1>Shipping</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId='address'>
