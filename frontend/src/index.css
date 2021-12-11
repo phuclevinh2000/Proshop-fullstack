@@ -2,6 +2,12 @@ main {
   min-height: 80vh;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 h3 {
   padding: 1rem 0;
 }
