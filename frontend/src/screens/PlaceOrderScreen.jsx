@@ -1,28 +1,55 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
+import { createOrder } from '../redux/actions/orderActions';
 
 const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Calculate prices
   const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2)
-  }
-  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
 
-  cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100
+  cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100;
 
-  cart.taxPrice = addDecimals(Number((0.24 * cart.itemsPrice).toFixed(2)))  //24% tax 
+  cart.taxPrice = addDecimals(Number((0.24 * cart.itemsPrice).toFixed(2))); //24% tax
 
-  cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2)
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice)
+  ).toFixed(2);
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+  // console.log(order);
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+    // eslint-disable-next-line
+  }, [navigate, success]);
 
   const placeOrderHandler = () => {
-    console.log('hihihihi');
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        itemsPrice: cart.itemsPrice,
+        taxPrice: cart.taxPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
   return (
     <>
@@ -114,12 +141,18 @@ const PlaceOrderScreen = () => {
               </ListGroup.Item>
 
               <ListGroup.Item>
+                {error && <Message variant='danger'>{error}</Message>}
+              </ListGroup.Item>
+
+              <ListGroup.Item>
                 <Button
                   type='button'
                   className='btn-block'
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
-                >Place Order</Button>
+                >
+                  Place Order
+                </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
